@@ -1,0 +1,14 @@
+D:\flowlanglauncher\bin\Release\net8.0-windows\FlowLangLauncher.exe
+D:\flowlanglauncher\bin\Release\net8.0-windows\FlowLangLauncher.deps.json
+D:\flowlanglauncher\bin\Release\net8.0-windows\FlowLangLauncher.runtimeconfig.json
+D:\flowlanglauncher\bin\Release\net8.0-windows\FlowLangLauncher.dll
+D:\flowlanglauncher\bin\Release\net8.0-windows\FlowLangLauncher.pdb
+D:\flowlanglauncher\obj\Release\net8.0-windows\FlowLangLauncher.GeneratedMSBuildEditorConfig.editorconfig
+D:\flowlanglauncher\obj\Release\net8.0-windows\FlowLangLauncher.AssemblyInfoInputs.cache
+D:\flowlanglauncher\obj\Release\net8.0-windows\FlowLangLauncher.AssemblyInfo.cs
+D:\flowlanglauncher\obj\Release\net8.0-windows\FlowLangLauncher.csproj.CoreCompileInputs.cache
+D:\flowlanglauncher\obj\Release\net8.0-windows\FlowLangLauncher.dll
+D:\flowlanglauncher\obj\Release\net8.0-windows\refint\FlowLangLauncher.dll
+D:\flowlanglauncher\obj\Release\net8.0-windows\FlowLangLauncher.pdb
+D:\flowlanglauncher\obj\Release\net8.0-windows\FlowLangLauncher.genruntimeconfig.cache
+D:\flowlanglauncher\obj\Release\net8.0-windows\ref\FlowLangLauncher.dll

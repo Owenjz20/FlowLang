@@ -1,0 +1,14 @@
+D:\Flowlang\bin\Release\net8.0\FlowLangRuntime.exe
+D:\Flowlang\bin\Release\net8.0\FlowLangRuntime.deps.json
+D:\Flowlang\bin\Release\net8.0\FlowLangRuntime.runtimeconfig.json
+D:\Flowlang\bin\Release\net8.0\FlowLangRuntime.dll
+D:\Flowlang\bin\Release\net8.0\FlowLangRuntime.pdb
+D:\Flowlang\obj\Release\net8.0\FlowLangRuntime.GeneratedMSBuildEditorConfig.editorconfig
+D:\Flowlang\obj\Release\net8.0\FlowLangRuntime.AssemblyInfoInputs.cache
+D:\Flowlang\obj\Release\net8.0\FlowLangRuntime.AssemblyInfo.cs
+D:\Flowlang\obj\Release\net8.0\FlowLangRuntime.csproj.CoreCompileInputs.cache
+D:\Flowlang\obj\Release\net8.0\FlowLangRuntime.dll
+D:\Flowlang\obj\Release\net8.0\refint\FlowLangRuntime.dll
+D:\Flowlang\obj\Release\net8.0\FlowLangRuntime.pdb
+D:\Flowlang\obj\Release\net8.0\FlowLangRuntime.genruntimeconfig.cache
+D:\Flowlang\obj\Release\net8.0\ref\FlowLangRuntime.dll

@@ -1,4 +1,0 @@
-D:\flowlangapp\obj\Release\net8.0\FlowLangRuntime.GeneratedMSBuildEditorConfig.editorconfig
-D:\flowlangapp\obj\Release\net8.0\FlowLangRuntime.AssemblyInfoInputs.cache
-D:\flowlangapp\obj\Release\net8.0\FlowLangRuntime.AssemblyInfo.cs
-D:\flowlangapp\obj\Release\net8.0\FlowLangRuntime.csproj.CoreCompileInputs.cache

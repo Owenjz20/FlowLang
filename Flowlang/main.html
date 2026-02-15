@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FlowLang · AI‑assisted scripting language</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #020617;
+      --panel: #020617;
+      --border: #1f2937;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --text: #e5e9f0;
+      --muted: #9ca3af;
+      --danger: #f97373;
+      --code-bg: #020617;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0b1120 0, #020617 55%);
+      color: var(--text);
+    }
+    header {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to right, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7));
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #38bdf8, #0ea5e9 40%, #0f172a 80%);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.6);
+    }
+    .logo-text {
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+    .logo-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 2.5rem;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+    .hero-title {
+      font-size: 2.4rem;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-sub {
+      color: var(--muted);
+      max-width: 32rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .badge {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+    }
+    .badge-accent {
+      border-color: rgba(56, 189, 248, 0.5);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .btn {
+      border-radius: 999px;
+      padding: 0.55rem 1.2rem;
+      font-size: 0.9rem;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(to right, #0ea5e9, #22c55e);
+      border-color: transparent;
+      color: #0b1120;
+      font-weight: 600;
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.5);
+    }
+    .btn-primary:hover { filter: brightness(1.05); }
+    .btn:hover { border-color: var(--accent); }
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .hero-code {
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), rgba(15, 23, 42, 0.95));
+      border-radius: 16px;
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 18px 45px rgba(15, 23, 42, 0.9);
+      padding: 1rem 1.1rem;
+    }
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .code-dots {
+      display: flex;
+      gap: 0.3rem;
+    }
+    .code-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #f97373;
+    }
+    .code-dot:nth-child(2) { background: #facc15; }
+    .code-dot:nth-child(3) { background: #22c55e; }
+    pre {
+      margin: 0;
+      background: var(--code-bg);
+      border-radius: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      padding: 0.75rem 0.9rem;
+      overflow-x: auto;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    code { font-family: inherit; }
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+    h2.section-title {
+      font-size: 1.2rem;
+      margin: 0 0 0.75rem;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 1.75rem;
+      margin-bottom: 2.5rem;
+    }
+    ul {
+      padding-left: 1.1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    li + li { margin-top: 0.25rem; }
+    .card {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 1rem 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .card h3 {
+      margin: 0 0 0.4rem;
+      font-size: 1rem;
+    }
+    .card p {
+      margin: 0 0 0.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .upload-form {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .upload-form label {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .upload-form input[type="text"],
+    .upload-form input[type="file"] {
+      font-size: 0.9rem;
+      padding: 0.4rem 0.5rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #020617;
+      color: var(--text);
+    }
+    .upload-form button {
+      align-self: flex-start;
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: minmax(0, 1fr); }
+      .two-col { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-mark"></div>
+      <div>
+        <div class="logo-text">FlowLang</div>
+        <div class="logo-sub">AI‑assisted scripting · tiny core</div>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="#getting-started">Install</a>
+      <a href="#language">Language</a>
+      <a href="#packages">Packages</a>
+      <a href="#upload">Upload package</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1 class="hero-title">
+          A small language with <span>big opinions</span>.
+        </h1>
+        <p class="hero-sub">
+          FlowLang installs from a single setup file. You get the IDE, interpreter, and package
+          manager—no compilers, no SDKs, no extra steps.
+        </p>
+        <div class="hero-badges">
+          <span class="badge badge-accent">Installer‑first</span>
+          <span class="badge">Win32 IDE</span>
+          <span class="badge">AI entry point</span>
+          <span class="badge">Online package registry</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#getting-started">
+            Download installer
+          </a>
+          <a class="btn" href="#upload">
+            Publish a package
+          </a>
+        </div>
+        <div class="hero-note">
+          Once installed, just open “FlowLang IDE” and start writing. Everything else is built in.
+        </div>
+      </div>
+      <div class="hero-code">
+        <div class="code-header">
+          <span>main.flow</span>
+          <div class="code-dots">
+            <div class="code-dot"></div>
+            <div class="code-dot"></div>
+            <div class="code-dot"></div>
+          </div>
+        </div>
+        <pre><code>func greet(name) {
+    std.print("hello, ")
+    std.print(name)
+}
+
+let who = "flowlang"
+greet(who)</code></pre>
+      </div>
+    </section>
+
+    <section id="getting-started">
+      <div class="section-label">Setup</div>
+      <h2 class="section-title">Install FlowLang</h2>
+      <div class="two-col">
+        <div>
+          <p>FlowLang is distributed as a single installer.</p>
+          <pre><code>1. Download the FlowLang installer
+2. Run it
+3. Launch "FlowLang IDE" from your desktop or start menu</code></pre>
+          <p>After installation you get:</p>
+          <ul>
+            <li><strong>FlowLang IDE</strong> — graphical editor and runner</li>
+            <li><strong>FlowLang Interpreter</strong> — command‑line runner (optional)</li>
+            <li><strong>Package Manager</strong> — connected to this website’s registry</li>
+          </ul>
+        </div>
+        <div>
+          <p><strong>No extra setup:</strong></p>
+          <ul>
+            <li>No compiler required</li>
+            <li>No SDKs or environment variables</li>
+            <li>Everything the language needs ships inside the installer</li>
+          </ul>
+          <p>
+            Advanced users can still build from source, but normal users just install and start
+            writing FlowLang.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="language">
+      <div class="section-label">Language</div>
+      <h2 class="section-title">Core syntax</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Basics</h3>
+          <p>Variables, arithmetic, and printing:</p>
+          <pre><code>let x = 10
+let y = x * 2
+
+if y &gt; 10 {
+    print("big")
+} else {
+    print("small")
+}</code></pre>
+        </div>
+        <div class="card">
+          <h3>Functions</h3>
+          <p>Reusable logic with <code>func</code> and <code>return</code>:</p>
+          <pre><code>func add(a, b) {
+    return a + b
+}
+
+print(add(2, 3))</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="packages">
+      <div class="section-label">Packages</div>
+      <h2 class="section-title">Using packages</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Install from the registry</h3>
+          <p>From the IDE:</p>
+          <ul>
+            <li>Open <strong>Packages → Browse…</strong></li>
+            <li>Search for a package by name</li>
+            <li>Click <strong>Install</strong></li>
+          </ul>
+          <p>From the command line (optional):</p>
+          <pre><code>flowlang pkg install my-math-lib
+flowlang pkg list
+flowlang pkg remove my-math-lib</code></pre>
+        </div>
+        <div class="card">
+          <h3>What a package is</h3>
+          <p>A FlowLang package is a single <code>.flowpkg</code> file that contains:</p>
+          <ul>
+            <li><code>manifest.txt</code> — name, version, description</li>
+            <li>One or more <code>.flow</code> source files</li>
+          </ul>
+          <p>The installer configures the package manager to talk to this site’s registry.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="upload">
+      <div class="section-label">Publish</div>
+      <h2 class="section-title">Upload a package</h2>
+      <div class="card">
+        <h3>Create your package</h3>
+        <p>On your machine (after installing FlowLang):</p>
+        <pre><code>my-math-lib/
+  manifest.txt
+  src/
+    math.flow</code></pre>
+        <p><code>manifest.txt</code> example:</p>
+        <pre><code>name: my-math-lib
+version: 1.0.0
+author: your-name
+description: Extra math helpers
+entry: src/math.flow</code></pre>
+        <p>Then bundle it into a <code>.flowpkg</code> file (your tooling or a simple script can zip it).</p>
+      </div>
+
+      <div class="card">
+        <h3>Upload to the registry</h3>
+        <p>Use this form to publish your <code>.flowpkg</code> so anyone can install it via the IDE or CLI.</p>
+        <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+          <label>
+            Package name
+            <input type="text" name="name" placeholder="my-math-lib" required />
+          </label>
+          <label>
+            Version
+            <input type="text" name="version" placeholder="1.0.0" required />
+          </label>
+          <label>
+            Package file (.flowpkg)
+            <input type="file" name="file" accept=".flowpkg" required />
+          </label>
+          <button class="btn btn-primary" type="submit">Upload package</button>
+        </form>
+        <p style="margin-top:0.75rem;font-size:0.8rem;color:var(--muted);">
+          The server will validate your manifest and make the package available in the registry.
+        </p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
